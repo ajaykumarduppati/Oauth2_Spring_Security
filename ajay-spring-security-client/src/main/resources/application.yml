@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ajay_practice
+    username: root
+    password: ajay@9989
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          ajaySecurity-client-oidc:
+            provider: spring
+            client-id: ajaySecurity-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://ajaykumar:8080/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: ajaySecurity-client-oidc
+          api-client-authorization-code:
+            provider: spring
+            client-id: ajaySecurity-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://ajaykumar:8080/authorized"
+            scope: ajaySecurity.read
+            client-name: ajaySecurity-client-authorization-code
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
